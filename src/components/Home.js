@@ -1,7 +1,9 @@
+import '../styles/_home.sass'
+
 const Home = () => {
   return (
       <div className="home">
-          <h2>Homepage</h2>
+          <h2 className="font-semibold">Homepage</h2>
       </div>
   );
 }
