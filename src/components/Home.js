@@ -3,28 +3,23 @@ import '../styles/_home.sass'
 import Bloglist from "./Blogslist";
 
 const Home = () => {
-    const [blogs, setBlogs] = useState([
-        {title: 'My new website', body: 'lorem ipsoum...', author: 'Mario', id: 1},
-        {title: 'Welcome party!', body: 'lorem ipsoum...', author: 'Yoshi', id: 2},
-        {title: 'Web dev top tips', body: 'lorem ipsoum...', author: 'Luigi', id: 3}
-    ]);
-
-    const handleDelete = (id) => {
-        const newBlogs = blogs.filter(blog => blog.id !== id)
-        setBlogs(newBlogs)
-    }
+    const [blogs, setBlogs] = useState(null);
 
     useEffect(() => {
-        console.log("use effect ran")
-        return () => {
-        };
+        fetch('http://localhost:8000/blogs')
+            .then(res => {
+                return res.json()
+            })
+            .then((data) => {
+                setBlogs(data)
+            })
     }, []);
 
 
     return (
       <div className="home">
 
-          <Bloglist blogs={blogs} title="All blogs" handleDelete={handleDelete}/>
+          { blogs && <Bloglist blogs={blogs} title="All blogs"/> }
       </div>
     );
 }
