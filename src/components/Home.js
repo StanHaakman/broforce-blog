@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import '../styles/_home.sass'
 import Bloglist from "./Blogslist";
 
@@ -9,15 +9,26 @@ const Home = () => {
         {title: 'Web dev top tips', body: 'lorem ipsoum...', author: 'Luigi', id: 3}
     ]);
 
+    const [name, setName] = useState('Mario');
+
     const handleDelete = (id) => {
         const newBlogs = blogs.filter(blog => blog.id !== id)
         setBlogs(newBlogs)
     }
 
+    useEffect(() => {
+        console.log("use effect ran")
+        return () => {
+        };
+    }, [name]);
+
+
     return (
       <div className="home">
+          <button onClick={() => setName((name === 'Luigi' ? 'Mario': 'Luigi'))}>Change name</button>
+
           <Bloglist blogs={blogs} title="All blogs" handleDelete={handleDelete}/>
-          <Bloglist blogs={blogs.filter((blog) => blog.author === 'Mario')} title="Mario's blogs" handleDelete={handleDelete}/>
+          <Bloglist blogs={blogs.filter((blog) => blog.author === name)} title={name + " blogs"} handleDelete={handleDelete}/>
       </div>
     );
 }
